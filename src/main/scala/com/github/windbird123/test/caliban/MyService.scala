@@ -2,6 +2,7 @@ package com.github.windbird123.test.caliban
 
 import com.github.windbird123.test.caliban.MyData.{ Origin, _ }
 import zio._
+import zio.magic._
 import zio.stream.ZStream
 
 trait MyService {
@@ -23,8 +24,11 @@ object MyService {
 
   def deleteEvents: ZStream[Has[MyService], Nothing, String] = ZStream.accessStream(_.get.deleteEvents)
 
-  val live: ZLayer[Any, Nothing, Has[MyService]] =
-    Ref.make(MyData.sampleCharacters).toLayer ++ Hub.unbounded[String].toLayer >>> MyServiceLive.toLayer[MyService]
+  val live: ZLayer[Any, Nothing, Has[MyService]] = ZLayer.wire(
+    Ref.make(MyData.sampleCharacters).toLayer,
+    Hub.unbounded[String].toLayer,
+    MyServiceLive.toLayer[MyService]
+  )
 
 }
 
