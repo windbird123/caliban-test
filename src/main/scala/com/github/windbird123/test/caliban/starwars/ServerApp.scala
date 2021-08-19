@@ -1,4 +1,4 @@
-package com.github.windbird123.test.caliban
+package com.github.windbird123.test.caliban.starwars
 
 import caliban.ZHttpAdapter
 import zhttp.http._

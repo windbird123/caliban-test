@@ -1,6 +1,6 @@
-package com.github.windbird123.test.caliban
+package com.github.windbird123.test.caliban.starwars
 
-import com.github.windbird123.test.caliban.MyData.{ Origin, _ }
+import com.github.windbird123.test.caliban.starwars.MyData.{ Origin, _ }
 import zio._
 import zio.magic._
 import zio.stream.ZStream
@@ -13,10 +13,10 @@ trait MyService {
 }
 
 object MyService {
-  def getCharacters(origin: Option[Origin]): ZIO[Has[MyService], Nothing, List[Character]] =
+  def getCharacters(origin: Option[Origin]): URIO[Has[MyService], List[Character]] =
     ZIO.serviceWith[MyService](_.getCharacters(origin))
 
-  def findCharacter(name: String): ZIO[Has[MyService], Nothing, Option[Character]] =
+  def findCharacter(name: String): URIO[Has[MyService], Option[Character]] =
     ZIO.serviceWith[MyService](_.findCharacter(name))
 
   def deleteCharacter(name: String): ZIO[Has[MyService], Nothing, Boolean] =
@@ -24,7 +24,7 @@ object MyService {
 
   def deleteEvents: ZStream[Has[MyService], Nothing, String] = ZStream.accessStream(_.get.deleteEvents)
 
-  val live: ZLayer[Any, Nothing, Has[MyService]] = ZLayer.wire(
+  val live: ZLayer[Any, Nothing, Has[MyService]] = ZLayer.wire[Has[MyService]](
     Ref.make(MyData.sampleCharacters).toLayer,
     Hub.unbounded[String].toLayer,
     MyServiceLive.toLayer[MyService]

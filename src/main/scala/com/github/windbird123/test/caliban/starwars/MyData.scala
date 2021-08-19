@@ -1,7 +1,7 @@
-package com.github.windbird123.test.caliban
+package com.github.windbird123.test.caliban.starwars
 
-import com.github.windbird123.test.caliban.MyData.Origin.{ BELT, EARTH, MARS }
-import com.github.windbird123.test.caliban.MyData.Role.{ Captain, Engineer }
+import com.github.windbird123.test.caliban.starwars.MyData.Origin.{ BELT, EARTH, MARS }
+import com.github.windbird123.test.caliban.starwars.MyData.Role.{ Captain, Engineer, Pilot }
 
 object MyData {
   sealed trait Origin
@@ -26,6 +26,8 @@ object MyData {
   val sampleCharacters = List(
     Character("James Holden", List("Jim", "Hoss"), EARTH, Some(Captain("Rocinante"))),
     Character("Naomi Nagata", Nil, BELT, Some(Engineer("Rocinante"))),
+    Character("Alex Kamal", Nil, MARS, Some(Pilot("Rocinante"))),
+    Character("Chrisjen Avasarala", Nil, EARTH, None),
     Character("Josephus Miller", List("Joe"), BELT, None),
     Character("Roberta Draper", List("Bobbie", "Gunny"), MARS, None)
   )
