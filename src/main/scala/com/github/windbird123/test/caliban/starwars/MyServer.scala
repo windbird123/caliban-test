@@ -8,7 +8,7 @@ import zio.console.Console
 import zio.magic._
 import zio.{ App, ExitCode, Has, URIO, ZIO }
 
-object ServerApp extends App {
+object MyServer extends App {
   val routes = for {
     interpreter <- MyApi.api.interpreter
     http = Http.route[Request] {

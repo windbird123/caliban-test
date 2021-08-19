@@ -23,6 +23,7 @@ object MyApi extends GenericSchema[Has[MyService]] {
   case class Mutations(deleteCharacter: CharacterArgs => URIO[Has[MyService], Boolean])
   case class Subscriptions(characterDeleted: ZStream[Has[MyService], Nothing, String])
 
+  // schema 정의 순서 중요!
   implicit val roleSchema: Schema[Has[MyService], Role]                     = gen[Role]
   implicit val characterSchema: Schema[Has[MyService], Character]           = gen[Character]
   implicit val characterArgsSchema: Schema[Has[MyService], CharacterArgs]   = gen[CharacterArgs]
